@@ -3,33 +3,25 @@ using namespace std;
 int main()
 {
 	ifstream f("subsecvmax.in");
-	int n;
-	f >> n;
-	int prec = -2000000, lg = 0, lgmax = 0, imax, i;
-	for (i = 1; i <= n; i++)
+	int n, x;
+	f >> n >> x;
+	int lg=1, poz=1, lgmax=1, pozmax=1;
+	for (int i = 2; i <= n; i++)
 	{
-		int x;
-		f >> x;
-		if (x > prec) lg++;
+		int y;
+		f >> y;
+		if (y >= x) lg++;
 		else
 		{
-			if (lg > lgmax)
-			{
-				lgmax = lg;
-				imax = i-lg;
-			}
-			lg = 1;
+			if (lg > lgmax) lgmax = lg, pozmax = poz;
+			lg = 1, poz = i;
 		}
-		prec = x;
+		x = y;
 	}
-	if (lg > lgmax)
-	{
-		lgmax = lg;
-		imax = i-lg;
-	}
+	if (lg > lgmax) lgmax = lg, pozmax = poz;
 	f.close();
 	ofstream g("subsecvmax.out");
-	g << imax << ' ' << lgmax;
+	g << pozmax << ' ' << lgmax;
 	g.close();
 	return 0;
 }
